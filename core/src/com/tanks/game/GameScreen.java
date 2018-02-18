@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -46,6 +47,34 @@ public class GameScreen implements Screen {
         skin = new Skin(Assets.getInstance().getAtlas());
 
 
+    }
+
+    private void createFireBtn() {
+        
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.up = skin.getDrawable("menuBtn");
+        textButtonStyle.font = font32;
+        skin.add("tbs", textButtonStyle);
+
+        TextButton btnFire = new TextButton("FIRE", skin, "tbs");
+        btnFire.setPosition(1000, 140);
+        stage.addActor(btnFire);
+
+        btnFire.addListener(new ClickListener() {
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                time = System.currentTimeMillis();
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                long time2 = System.currentTimeMillis();
+                long dt = time2 - time;
+                bulletEmitter.addNew(player.makeBullet(dt));
+            }
+        });
     }
 
     private void createJoystick() {
@@ -137,6 +166,7 @@ public class GameScreen implements Screen {
         createGUI();
         setupInput();
         createJoystick();
+        createFireBtn();
     }
 
     private long time;
