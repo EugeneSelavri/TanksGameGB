@@ -2,9 +2,10 @@ package com.tanks.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Map {
-    private Texture textureGround;
+    private TextureRegion textureGround;
     private byte[][] data;
     private float time;
     private float[][] color;
@@ -15,7 +16,7 @@ public class Map {
     private static final int HEIGHT = 720 / CELL_SIZE;
 
     public Map() {
-        this.textureGround = new Texture("grass.png");
+        this.textureGround = new TextureRegion(Assets.findTexture("grass"), 8, 0, CELL_SIZE, CELL_SIZE);
         this.data = new byte[WIDTH][HEIGHT];
         color = new float[WIDTH][HEIGHT];
         generate();
@@ -35,7 +36,7 @@ public class Map {
             for (int j = 0; j < HEIGHT ; j++) {
                 if (data[i][j] == 1) {
                     batch.setColor(0, color[i][j], 0, 1);
-                    batch.draw(textureGround, i * CELL_SIZE, j * CELL_SIZE, 8, 0, CELL_SIZE, CELL_SIZE);
+                    batch.draw(textureGround, i * CELL_SIZE, j * CELL_SIZE);
                 }
             }
         }

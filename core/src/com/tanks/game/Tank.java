@@ -5,13 +5,14 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class Tank {
-    protected Texture textureBaseBody;
-    protected Texture textureBaseTrack;
-    protected Texture textureTurret;
-    protected Texture healthPoint;
+    protected TextureRegion textureBaseBody;
+    protected TextureRegion textureBaseTrack;
+    protected TextureRegion textureTurret;
+    protected TextureRegion healthPoint;
     protected Vector2 position;
     protected Vector2 weaponPosition;
     protected TanksGame game;
@@ -27,12 +28,14 @@ public class Tank {
         this.game = game;
         this.position = position;
         weaponPosition = new Vector2(position).add(0, 0);
-        textureBaseBody = new Texture("tankNavy.png");
-        textureBaseTrack = new Texture("tankTrack.png");
-        textureTurret = new Texture("turret.png");
-        healthPoint = new Texture("hbar.png");
+        textureBaseBody = Assets.findTexture("tankNavy");
+        textureBaseTrack = Assets.findTexture("tankTrack");
+        textureTurret = Assets.findTexture("turret");
+        healthPoint = Assets.findTexture("hbar");
+        healthPoint.setRegionWidth(healthPoint.getRegionWidth());
+        healthPoint.setRegionHeight(healthPoint.getRegionHeight() / 2);
         turr = new Sprite(textureTurret);
-        turr.setOrigin(0, textureTurret.getHeight() / 2);
+        turr.setOrigin(0, textureTurret.getRegionHeight() / 2);
         body = new Sprite(textureBaseBody);
         body.setOrigin(0, 0);
         track = new Sprite(textureBaseTrack);
@@ -50,16 +53,16 @@ public class Tank {
         track.setPosition(position.x, position.y);
         track.draw(batch);
 
-        body.setPosition(position.x -2, position.y + textureBaseTrack.getHeight() / 2 + 5);
-        body.setSize(textureBaseTrack.getWidth() + 4, textureBaseBody.getHeight());
+        body.setPosition(position.x -2, position.y + textureBaseTrack.getRegionHeight() / 2 + 5);
+        body.setSize(textureBaseTrack.getRegionWidth() + 4, textureBaseBody.getRegionHeight());
         body.draw(batch);
     }
 
     public void renderHP(SpriteBatch batch) {
         batch.setColor(0.5f, 0, 0, 0.5f);
-        batch.draw(healthPoint, position.x, position.y + textureBaseTrack.getHeight() / 2 + 10 + textureBaseBody.getHeight(), 0, 0, healthPoint.getWidth(), healthPoint.getHeight() / 3);
+        batch.draw(healthPoint, position.x, position.y + textureBaseTrack.getRegionHeight() / 2 + 10 + textureBaseBody.getRegionHeight());
         batch.setColor(0, 1.0f, 0, 0.5f);
-        batch.draw(healthPoint, position.x, position.y + textureBaseTrack.getHeight() / 2 + 10 + textureBaseBody.getHeight(), 0, 0, (int) (healthPoint.getWidth() * (float) hp / maxHp), healthPoint.getHeight() / 3);
+        batch.draw(healthPoint, position.x, position.y + textureBaseTrack.getRegionHeight() / 2 + 10 + textureBaseBody.getRegionHeight(), (int) (healthPoint.getRegionWidth() * (float) hp / maxHp), healthPoint.getRegionHeight());
 
         batch.setColor(1, 1, 1, 1);
     }
@@ -86,10 +89,10 @@ public class Tank {
         float cos = (float) Math.cos(Math.toRadians(turretAngle));
         float sin = (float) Math.sin(Math.toRadians(turretAngle));
 
-        float turrSize = textureTurret.getWidth();
+        float turrSize = textureTurret.getRegionWidth();
 
         float ammoPosX = turr.getX() + turrSize * cos;
-        float ammoPosY = turr.getY() + textureTurret.getHeight() / 2 + turrSize * sin;
+        float ammoPosY = turr.getY() + textureTurret.getRegionHeight() / 2 + turrSize * sin;
 
         float power = (float) Math.min(800, 400 + 0.4 * dt);
 
@@ -114,8 +117,8 @@ public class Tank {
     }
 
     public boolean isTank(float x, float y) {
-        boolean body = x > position.x - 2 && x < position.x - 2 + textureBaseBody.getWidth() && y > position.y + textureBaseTrack.getHeight() / 2 + 5 && y < position.y + textureBaseTrack.getHeight() / 2 + 5 + textureBaseBody.getHeight();
-        boolean track = x > position.x && x < position.x + textureBaseTrack.getWidth() && y > position.y && y < position.y + textureBaseTrack.getHeight();
+        boolean body = x > position.x - 2 && x < position.x - 2 + textureBaseBody.getRegionWidth() && y > position.y + textureBaseTrack.getRegionHeight() / 2 + 5 && y < position.y + textureBaseTrack.getRegionHeight() / 2 + 5 + textureBaseBody.getRegionHeight();
+        boolean track = x > position.x && x < position.x + textureBaseTrack.getRegionWidth() && y > position.y && y < position.y + textureBaseTrack.getRegionHeight();
 
         return body || track;
     }

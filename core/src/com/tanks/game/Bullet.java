@@ -3,10 +3,11 @@ package com.tanks.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class Bullet implements Renderable {
-    private Texture texture = Textures.BULLET;
+    private TextureRegion bullet;
     private Vector2 position;
     private Vector2 velocity;
 
@@ -14,6 +15,7 @@ public class Bullet implements Renderable {
     private float angle = 0f;
 
     public Bullet(float x, float y, float vx, float vy) {
+        bullet = Assets.getInstance().getAtlas().findRegion("ammo");
         position = new Vector2(x,y);
         velocity = new Vector2(vx, vy);
     }
@@ -33,7 +35,7 @@ public class Bullet implements Renderable {
     @Override
     public boolean render(SpriteBatch batch) {
         if (active) {
-            batch.draw(texture, position.x - texture.getWidth() / 2, position.y - texture.getHeight() / 2);
+            batch.draw(bullet, position.x - bullet.getRegionWidth() / 2, position.y - bullet.getRegionHeight() / 2);
 
             update();
         }
@@ -50,8 +52,8 @@ public class Bullet implements Renderable {
     }
 
     public Vector2 getCenter() {
-        float x = position.x - texture.getWidth() / 2;
-        float y = position.y - texture.getHeight() / 2;
+        float x = position.x - bullet.getRegionWidth() / 2;
+        float y = position.y - bullet.getRegionHeight() / 2;
         Vector2 center = new Vector2(x, y);
         return center;
 

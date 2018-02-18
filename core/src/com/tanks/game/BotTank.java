@@ -17,7 +17,7 @@ public final class BotTank extends Tank {
         float cos = (float) Math.cos(Math.toRadians(turretAngle));
         float sin = (float) Math.sin(Math.toRadians(turretAngle));
 
-        float turrSize = textureTurret.getWidth();
+        float turrSize = textureTurret.getRegionWidth();
 
         float ammoPosX = turr.getX() + turr.getWidth()/2 - turrSize/2 * cos;
         float ammoPosY = turr.getY() + turr.getHeight()/2 - turrSize * sin;
@@ -35,13 +35,13 @@ public final class BotTank extends Tank {
         super(game, position);
         body.flip(true, false);
         turr.flip(true, false);
-        turr.setOrigin(textureTurret.getWidth(), textureTurret.getHeight()/2);
+        turr.setOrigin(textureTurret.getRegionWidth(), textureTurret.getRegionHeight()/2);
     }
 
     @Override
     public void render(SpriteBatch batch) {
-        turr.setX((float) (position.x - textureBaseBody.getWidth() * 0.19));
-        turr.setY((float) (position.y + textureBaseTrack.getHeight() + textureBaseBody.getHeight() * 0.2));
+        turr.setX((float) (position.x - textureBaseBody.getRegionWidth() * 0.19));
+        turr.setY((float) (position.y + textureBaseTrack.getRegionHeight() + textureBaseBody.getRegionHeight() * 0.2));
         turr.draw(batch);
         super.render(batch);
     }
@@ -66,10 +66,10 @@ public final class BotTank extends Tank {
 
         moveTank(flagMove);
 
-        if (position.x < Map.getFullWidth()/2 + textureBaseTrack.getWidth() && flagMove == -1) {
+        if (position.x < Map.getFullWidth()/2 + textureBaseTrack.getRegionWidth() && flagMove == -1) {
             flagMove = 1;
         }
-        if (position.x > Map.getFullWidth() - textureBaseTrack.getWidth() && flagMove == 1) {
+        if (position.x > Map.getFullWidth() - textureBaseTrack.getRegionWidth() && flagMove == 1) {
             flagMove = -1;
         }
 

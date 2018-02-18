@@ -12,8 +12,8 @@ public class MyTank extends Tank {
 
     @Override
     public void render(SpriteBatch batch) {
-        turr.setX((float) (position.x + textureBaseBody.getWidth() * 0.8));
-        turr.setY((float) (position.y + textureBaseTrack.getHeight() + textureBaseBody.getHeight() * 0.2));
+        turr.setX((float) (position.x + textureBaseBody.getRegionWidth() * 0.8));
+        turr.setY((float) (position.y + textureBaseTrack.getRegionHeight() + textureBaseBody.getRegionHeight() * 0.2));
         turr.draw(batch);
         super.render(batch);
     }

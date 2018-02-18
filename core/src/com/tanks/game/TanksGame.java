@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.Iterator;
 
 public class TanksGame extends ApplicationAdapter implements InputProcessor {
 	private SpriteBatch batch;
-	private Texture textureBackground;
+	private TextureRegion textureBackground;
 	private Map map;
 	private MyTank player;
 	private BotTank bot;
@@ -33,7 +34,7 @@ public class TanksGame extends ApplicationAdapter implements InputProcessor {
 		Gdx.input.setInputProcessor(this);
 		dt = Gdx.graphics.getDeltaTime();
 		batch = new SpriteBatch();
-		textureBackground = new Texture("background.png");
+		textureBackground = Assets.findTexture("background");
 		map = new Map();
 		player = new MyTank(this, new Vector2(100, 380));
 		bot = new BotTank(this, new Vector2(1100, 380));

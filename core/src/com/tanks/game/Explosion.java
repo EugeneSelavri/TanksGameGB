@@ -2,11 +2,12 @@ package com.tanks.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Explosion implements Renderable{
     float x;
     float y;
-    Texture[] explosion;
+    TextureRegion[] explosion;
     int i = -1;
     long time1 = -1;
     long time2 = -1;
@@ -14,16 +15,16 @@ public class Explosion implements Renderable{
     public Explosion(float x, float y) {
         this.x = x;
         this.y = y;
-        explosion = new Texture[3];
-        explosion[0] = Textures.EXPLOSION1;
-        explosion[1] = Textures.EXPLOSION2;
-        explosion[2] = Textures.EXPLOSION3;
+        explosion = new TextureRegion[3];
+        explosion[0] = Assets.findTexture("explosion1");
+        explosion[1] = Assets.findTexture("explosion2");
+        explosion[2] = Assets.findTexture("explosion3");
     }
 
     public boolean render(SpriteBatch batch) {
         update();
         if (i >= 0 && i < explosion.length) {
-            batch.draw(explosion[i], x - explosion[i].getWidth()/2, y - explosion[i].getHeight()/2);
+            batch.draw(explosion[i], x - explosion[i].getRegionWidth()/2, y - explosion[i].getRegionHeight()/2);
         }
         return i != -2;
     }
