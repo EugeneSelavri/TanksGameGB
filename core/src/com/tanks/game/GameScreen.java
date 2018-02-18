@@ -1,18 +1,17 @@
 package com.tanks.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class GameScreen implements Screen {
     private SpriteBatch batch;
@@ -46,9 +45,82 @@ public class GameScreen implements Screen {
         stage = new Stage(ScreenManager.getInstance().getViewport(), batch);
         skin = new Skin(Assets.getInstance().getAtlas());
 
+
     }
 
     private void createJoystick() {
+        group = new Group();
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.up = skin.getDrawable("menuBtn");
+        textButtonStyle.font = font32;
+        skin.add("tbs", textButtonStyle);
+
+        TextButton btnLeft = new TextButton("LEFT", skin, "tbs");
+        TextButton btnRight = new TextButton("RIGHT", skin, "tbs");
+        TextButton btnUp = new TextButton("UP", skin, "tbs");
+        TextButton btnDown = new TextButton("DOWN", skin, "tbs");
+
+        btnLeft.setPosition(20, 140);
+        btnRight.setPosition(300, 140);
+        btnUp.setPosition(140, 240);
+        btnDown.setPosition(140, 40);
+
+        group.addActor(btnLeft);
+        group.addActor(btnRight);
+        group.addActor(btnUp);
+        group.addActor(btnDown);
+
+        stage.addActor(group);
+
+        btnLeft.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                player.setExternalMoveTank(-1);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                player.setExternalMoveTank(0);
+            }
+        });
+        btnRight.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                player.setExternalMoveTank(1);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                player.setExternalMoveTank(0);
+            }
+        });
+
+        btnUp.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                player.setExternalMoveTurret(1);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                player.setExternalMoveTurret(0);
+            }
+        });
+        btnDown.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                player.setExternalMoveTurret(-1);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                player.setExternalMoveTurret(0);
+            }
+        });
 
     }
 
@@ -63,12 +135,21 @@ public class GameScreen implements Screen {
         bot = new BotTank(this, new Vector2(1100, 380));
 
         createGUI();
-        keyboardListener();
+        setupInput();
+        createJoystick();
     }
 
     private long time;
 
-    private void keyboardListener() {
+    private void setupInput() {
+        InputMultiplexer multiInput = new InputMultiplexer();
+        multiInput.addProcessor(createKeyboardInputProcessor());
+        multiInput.addProcessor(stage);
+        Gdx.input.setInputProcessor(multiInput);
+
+    }
+
+    private InputProcessor createKeyboardInputProcessor() {
         InputProcessor ip = new InputProcessor() {
             @Override
             public boolean keyDown(int keycode) {
@@ -118,7 +199,8 @@ public class GameScreen implements Screen {
                 return false;
             }
         };
-        Gdx.input.setInputProcessor(ip);
+
+        return ip;
     }
 
     @Override
