@@ -4,7 +4,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -33,13 +32,45 @@ public class Assets {
 
     private Assets() {
         assetManager = new AssetManager();
-        assetManager.load("Game.pack", TextureAtlas.class);
-        assetManager.finishLoading();
-        atlas = assetManager.get("Game.pack", TextureAtlas.class);
+    }
+
+    public void loadAssets(ScreenManager.ScreenType type) {
+//        switch (type) {
+//            case MENU:
+//                createStandardFont(32);
+//                createStandardFont(96);
+//                assetManager.load("Game.pack", TextureAtlas.class);
+//                assetManager.finishLoading();
+//                atlas = assetManager.get("Game.pack", TextureAtlas.class);
+//                break;
+//            case GAME:
+                assetManager.load("Game.pack", TextureAtlas.class);
+                createStandardFont(12);
+                createStandardFont(32);
+                assetManager.finishLoading();
+                atlas = assetManager.get("Game.pack", TextureAtlas.class);
+//                break;
+//        }
     }
 
     public static TextureRegion findTexture(String name) {
         return getInstance().getAtlas().findRegion(name);
+    }
+
+    public void createStandardFont(int size) {
+        FileHandleResolver resolver = new InternalFileHandleResolver();
+        assetManager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
+        assetManager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
+        FreetypeFontLoader.FreeTypeFontLoaderParameter fontParameter = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+        fontParameter.fontFileName = "zorque.ttf";
+        fontParameter.fontParameters.size = size;
+        fontParameter.fontParameters.color = Color.WHITE;
+        fontParameter.fontParameters.borderWidth = 1;
+        fontParameter.fontParameters.borderColor = Color.BLACK;
+        fontParameter.fontParameters.shadowOffsetX = 0;
+        fontParameter.fontParameters.shadowOffsetY = 0;
+        fontParameter.fontParameters.shadowColor = Color.BLACK;
+        assetManager.load("zorque" + size + ".ttf", BitmapFont.class, fontParameter);
     }
 
     public void clear() {

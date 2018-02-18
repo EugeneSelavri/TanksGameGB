@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class MyTank extends Tank {
-    public MyTank(TanksGame game, Vector2 position) {
+    public MyTank(GameScreen game, Vector2 position) {
         super(game, position);
     }
 

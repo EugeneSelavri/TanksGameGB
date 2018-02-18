@@ -46,7 +46,7 @@ public class Bullet implements Renderable {
     private void update() {
         float dt = Gdx.graphics.getDeltaTime();
 
-        velocity.y -= TanksGame.GLOBAL_GRAVITY * dt;
+        velocity.y -= GameScreen.GLOBAL_GRAVITY * dt;
         angle = velocity.angle();
         position.mulAdd(velocity, dt);
     }

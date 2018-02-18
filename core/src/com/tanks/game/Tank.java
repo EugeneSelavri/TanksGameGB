@@ -1,8 +1,6 @@
 package com.tanks.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,7 +13,7 @@ public class Tank {
     protected TextureRegion healthPoint;
     protected Vector2 position;
     protected Vector2 weaponPosition;
-    protected TanksGame game;
+    protected GameScreen game;
     protected float turretAngle;
     protected int hp;
     protected int maxHp;
@@ -24,7 +22,7 @@ public class Tank {
     protected Sprite track;
     protected boolean isDead;
 
-    public Tank(TanksGame game, Vector2 position) {
+    public Tank(GameScreen game, Vector2 position) {
         this.game = game;
         this.position = position;
         weaponPosition = new Vector2(position).add(0, 0);

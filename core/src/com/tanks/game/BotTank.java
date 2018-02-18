@@ -31,7 +31,7 @@ public final class BotTank extends Tank {
         return b;
     }
 
-    public BotTank(TanksGame game, Vector2 position) {
+    public BotTank(GameScreen game, Vector2 position) {
         super(game, position);
         body.flip(true, false);
         turr.flip(true, false);
