@@ -15,7 +15,7 @@ public class ScreenManager {
     private TanksGame tanksGame;
     private Viewport viewport;
     private GameScreen gameScreen;
-//    private MenuScreen menuScreen;
+    private MenuScreen menuScreen;
 //    private LoadingScreen loadingScreen;
 //    private Screen targetScreen;
 
@@ -33,6 +33,7 @@ public class ScreenManager {
     public void init(TanksGame tanksGame, SpriteBatch batch) {
         this.tanksGame = tanksGame;
         this.gameScreen = new GameScreen(batch);
+        this.menuScreen = new MenuScreen(batch);
         this.viewport = new FitViewport(VIEW_WIDTH, VIEW_HEIGHT);
         this.viewport.apply();
     }
@@ -58,10 +59,10 @@ public class ScreenManager {
             currentScreen.dispose();
         }
         switch (type) {
-//            case MENU:
-//                currentScreen = menuScreen;
-//                Assets.getInstance().loadAssets(ScreenType.MENU);
-//                break;
+            case MENU:
+                currentScreen = menuScreen;
+                Assets.getInstance().loadAssets(ScreenType.MENU);
+                break;
             case GAME:
                 currentScreen = gameScreen;
                 Assets.getInstance().loadAssets(ScreenType.GAME);

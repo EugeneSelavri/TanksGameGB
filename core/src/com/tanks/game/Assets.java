@@ -35,22 +35,22 @@ public class Assets {
     }
 
     public void loadAssets(ScreenManager.ScreenType type) {
-//        switch (type) {
-//            case MENU:
-//                createStandardFont(32);
-//                createStandardFont(96);
-//                assetManager.load("Game.pack", TextureAtlas.class);
-//                assetManager.finishLoading();
-//                atlas = assetManager.get("Game.pack", TextureAtlas.class);
-//                break;
-//            case GAME:
+        switch (type) {
+            case MENU:
+                createStandardFont(32);
+                createStandardFont(96);
+                assetManager.load("Game.pack", TextureAtlas.class);
+                assetManager.finishLoading();
+                atlas = assetManager.get("Game.pack", TextureAtlas.class);
+                break;
+            case GAME:
                 assetManager.load("Game.pack", TextureAtlas.class);
                 createStandardFont(12);
                 createStandardFont(32);
                 assetManager.finishLoading();
                 atlas = assetManager.get("Game.pack", TextureAtlas.class);
-//                break;
-//        }
+                break;
+        }
     }
 
     public static TextureRegion findTexture(String name) {

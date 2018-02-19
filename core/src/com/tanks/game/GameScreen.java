@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,6 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class GameScreen implements Screen {
     private SpriteBatch batch;
+
+    public MyTank getPlayer() {
+        return player;
+    }
+
     private TextureRegion textureBackground;
     private Map map;
     private MyTank player;
@@ -37,9 +41,6 @@ public class GameScreen implements Screen {
 
     public GameScreen(SpriteBatch batch) {
         this.batch = batch;
-
-
-
     }
 
     private void createGUI() {
@@ -49,7 +50,7 @@ public class GameScreen implements Screen {
 
     }
 
-    private void createFireBtn() {
+    private void createOtherBtn() {
         
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.up = skin.getDrawable("menuBtn");
@@ -57,8 +58,11 @@ public class GameScreen implements Screen {
         skin.add("tbs", textButtonStyle);
 
         TextButton btnFire = new TextButton("FIRE", skin, "tbs");
+        TextButton btnExit = new TextButton("EXIT", skin, "tbs");
         btnFire.setPosition(1000, 140);
+        btnExit.setPosition(1000, 620);
         stage.addActor(btnFire);
+        stage.addActor(btnExit);
 
         btnFire.addListener(new ClickListener() {
 
@@ -75,7 +79,21 @@ public class GameScreen implements Screen {
                 bulletEmitter.addNew(player.makeBullet(dt));
             }
         });
+        btnExit.addListener(new ClickListener() {
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+               ScreenManager.getInstance().switchScreen(ScreenManager.ScreenType.MENU);
+            }
+        });
     }
+
+
 
     private void createJoystick() {
         group = new Group();
@@ -166,7 +184,7 @@ public class GameScreen implements Screen {
         createGUI();
         setupInput();
         createJoystick();
-        createFireBtn();
+        createOtherBtn();
     }
 
     private long time;
