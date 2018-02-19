@@ -303,11 +303,15 @@ public class GameScreen implements Screen {
             if (b.isActive()) {
                 Vector2 pos = b.getPosition();
 
+                boolean needsSound = false;
+
                 if (map.isGround(pos.x, pos.y)) {
                     b.deactivate();
                     Vector2 center = b.getCenter();
                     expEmitter.addNew(new Explosion(center.x, center.y));
                     map.clearGround(pos.x, pos.y, 8);
+
+                    needsSound = true;
                 }
 
                 if (player.isTank(pos.x, pos.y)) {
@@ -315,6 +319,8 @@ public class GameScreen implements Screen {
                     player.makeDamage(5);
                     Vector2 center = b.getCenter();
                     expEmitter.addNew(new Explosion(center.x, center.y));
+
+                    needsSound = true;
                 }
 
                 if (bot.isTank(pos.x, pos.y)) {
@@ -322,6 +328,12 @@ public class GameScreen implements Screen {
                     bot.makeDamage(5);
                     Vector2 center = b.getCenter();
                     expEmitter.addNew(new Explosion(center.x, center.y));
+
+                    needsSound = true;
+                }
+
+                if (needsSound) {
+                    Assets.getInstance().getSound().play();
                 }
             }
         }

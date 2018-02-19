@@ -1,8 +1,11 @@
 package com.tanks.game;
 
+import com.badlogic.gdx.Audio;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -18,6 +21,8 @@ public class Assets {
     private AssetManager assetManager;
     private TextureAtlas atlas;
 
+    private Sound sound;
+
     public TextureAtlas getAtlas() {
         return atlas;
     }
@@ -28,6 +33,10 @@ public class Assets {
 
     public AssetManager getAssetManager() {
         return assetManager;
+    }
+
+    public Sound getSound() {
+        return sound;
     }
 
     private Assets() {
@@ -47,6 +56,7 @@ public class Assets {
                 assetManager.load("Game.pack", TextureAtlas.class);
                 createStandardFont(12);
                 createStandardFont(32);
+                loadSound();
                 assetManager.finishLoading();
                 atlas = assetManager.get("Game.pack", TextureAtlas.class);
                 break;
@@ -58,6 +68,12 @@ public class Assets {
                 atlas = assetManager.get("Game.pack", TextureAtlas.class);
                 break;
         }
+    }
+
+    private void loadSound() {
+        Sound sound = Gdx.audio.newSound(Gdx.files.internal("gunSound.wav"));
+
+        this.sound = sound;
     }
 
     public static TextureRegion findTexture(String name) {
