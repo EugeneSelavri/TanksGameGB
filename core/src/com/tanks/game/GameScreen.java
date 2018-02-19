@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 public class GameScreen implements Screen {
     private SpriteBatch batch;
 
-    public MyTank getPlayer() {
+    public Tank getPlayer() {
         return player;
     }
 
@@ -29,6 +29,11 @@ public class GameScreen implements Screen {
     private RenderableEmitter<Explosion> expEmitter = new RenderableEmitter<>();
 
     private Stage stage;
+
+    public Tank getBot() {
+        return bot;
+    }
+
     private BitmapFont font32;
     private Skin skin;
     private Group group;
@@ -88,7 +93,7 @@ public class GameScreen implements Screen {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-               ScreenManager.getInstance().switchScreen(ScreenManager.ScreenType.MENU);
+               ScreenManager.getInstance().switchScreen(ScreenManager.ScreenType.MENU, null);
             }
         });
     }
@@ -179,7 +184,7 @@ public class GameScreen implements Screen {
 
         map = new Map();
         player = new MyTank(this, new Vector2(100, 380));
-        bot = new BotTank(this, new Vector2(1100, 380));
+        bot = new BotTank(this, new Vector2(1100, 380), player);
 
         createGUI();
         setupInput();
@@ -259,12 +264,19 @@ public class GameScreen implements Screen {
         batch.begin();
         batch.draw(textureBackground, 0, 0);
         map.render(batch);
-        if (player.getHp() != 0) {
+        if (player.getHp() > 0) {
             player.render(batch);
             player.renderHP(batch);
+        } else if (player.getHp() == 0) {
+            ScreenManager.getInstance().switchScreen(ScreenManager.ScreenType.RESULT, "bot");
         }
-        bot.render(batch);
-        bot.renderHP(batch);
+
+        if (bot.hp > 0) {
+            bot.render(batch);
+            bot.renderHP(batch);
+        } else if (bot.getHp() == 0) {
+            ScreenManager.getInstance().switchScreen(ScreenManager.ScreenType.RESULT, "player");
+        }
 
         expEmitter.render(batch);
         bulletEmitter.render(batch);

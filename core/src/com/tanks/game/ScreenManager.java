@@ -3,19 +3,19 @@ package com.tanks.game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 
 public class ScreenManager {
     public enum ScreenType {
-        MENU, GAME;
+        MENU, GAME, RESULT;
     }
 
     private TanksGame tanksGame;
     private Viewport viewport;
     private GameScreen gameScreen;
     private MenuScreen menuScreen;
+    private ResultScreen resultScreen;
 //    private LoadingScreen loadingScreen;
 //    private Screen targetScreen;
 
@@ -34,6 +34,7 @@ public class ScreenManager {
         this.tanksGame = tanksGame;
         this.gameScreen = new GameScreen(batch);
         this.menuScreen = new MenuScreen(batch);
+        this.resultScreen = new ResultScreen(batch, gameScreen);
         this.viewport = new FitViewport(VIEW_WIDTH, VIEW_HEIGHT);
         this.viewport.apply();
     }
@@ -52,7 +53,7 @@ public class ScreenManager {
         viewport.apply();
     }
 
-    public void switchScreen(ScreenType type) {
+    public void switchScreen(ScreenType type, String context) {
         Screen currentScreen = tanksGame.getScreen();
         Assets.getInstance().clear();
         if (currentScreen != null) {
@@ -67,6 +68,10 @@ public class ScreenManager {
                 currentScreen = gameScreen;
                 Assets.getInstance().loadAssets(ScreenType.GAME);
                 break;
+            case RESULT:
+                currentScreen = resultScreen;
+                resultScreen.setWinner(context);
+                Assets.getInstance().loadAssets(ScreenType.RESULT);
         }
         tanksGame.setScreen(currentScreen);
     }

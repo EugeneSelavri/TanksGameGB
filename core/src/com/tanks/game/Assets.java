@@ -50,6 +50,13 @@ public class Assets {
                 assetManager.finishLoading();
                 atlas = assetManager.get("Game.pack", TextureAtlas.class);
                 break;
+            case RESULT:
+                createStandardFont(32);
+                createStandardFont(96);
+                assetManager.load("Game.pack", TextureAtlas.class);
+                assetManager.finishLoading();
+                atlas = assetManager.get("Game.pack", TextureAtlas.class);
+                break;
         }
     }
 

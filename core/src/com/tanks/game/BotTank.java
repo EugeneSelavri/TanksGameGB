@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public final class BotTank extends Tank {
+    private Tank playerTank;
     private int flagTurr = 1;
     private int flagMove = -1;
     RenderableEmitter<Bullet> botBulletEmitter = new RenderableEmitter<>();
@@ -22,7 +23,9 @@ public final class BotTank extends Tank {
         float ammoPosX = turr.getX() + turr.getWidth()/2 - turrSize/2 * cos;
         float ammoPosY = turr.getY() + turr.getHeight()/2 - turrSize * sin;
 
-        float power = (float) Math.min(800, 400 + 0.4 * dt);
+        float k = position.x / (Map.getFullWidth()/2);
+
+        float power = (float) Math.min(800, 400 * k);
 
         float ammoVelX = power * cos * -1;
         float ammoVelY = power * sin * -1;
@@ -31,8 +34,9 @@ public final class BotTank extends Tank {
         return b;
     }
 
-    public BotTank(GameScreen game, Vector2 position) {
+    public BotTank(GameScreen game, Vector2 position, Tank tank) {
         super(game, position);
+        playerTank = tank;
         body.flip(true, false);
         turr.flip(true, false);
         turr.setOrigin(textureTurret.getRegionWidth(), textureTurret.getRegionHeight()/2);
@@ -48,18 +52,17 @@ public final class BotTank extends Tank {
 
     @Override
     public void update(float dt) {
-        long time = System.currentTimeMillis();
         super.update(dt);
         moveTurret(flagTurr);
         int random = 60 + (int)(Math.random() * 60);
         if(turretAngle > 0) {
-            Bullet b = makeBullet(System.currentTimeMillis() - time);
+            Bullet b = makeBullet(0);
             botBulletEmitter.addNew(b);
             flagTurr = -1;
         }
 
         if (turretAngle < random * -1) {
-            Bullet b = makeBullet(System.currentTimeMillis() - time);
+            Bullet b = makeBullet(0);
             botBulletEmitter.addNew(b);
             flagTurr = 1;
         }

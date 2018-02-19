@@ -19,7 +19,7 @@ public class TanksGame extends Game{
         batch = new SpriteBatch();
 
         ScreenManager.getInstance().init(this, batch);
-        ScreenManager.getInstance().switchScreen(ScreenManager.ScreenType.MENU);
+        ScreenManager.getInstance().switchScreen(ScreenManager.ScreenType.MENU, null);
 
     }
 

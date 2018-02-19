@@ -2,38 +2,41 @@ package com.tanks.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g3d.particles.influencers.RegionInfluencer;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class MenuScreen implements Screen {
+public class ResultScreen implements Screen {
     private SpriteBatch batch;
 
     private BitmapFont font32;
     private BitmapFont font96;
+    private Tank player;
 
-    private TextureRegion textureRegionBackground;
+    private TextureRegion textureBackground;
 
     private Stage stage;
     private Skin skin;
 
-    public MenuScreen(SpriteBatch batch) {
+    private String winner;
+
+    public void setWinner(String winner) {
+        this.winner = winner;
+    }
+
+    public ResultScreen(SpriteBatch batch, GameScreen gameScreen) {
         this.batch = batch;
+        this.player = gameScreen.getPlayer();
     }
 
     @Override
     public void show() {
-        textureRegionBackground = Assets.getInstance().getAtlas().findRegion("background");
+       textureBackground = Assets.findTexture("background");
         font32 = Assets.getInstance().getAssetManager().get("zorque32.ttf", BitmapFont.class);
         font96 = Assets.getInstance().getAssetManager().get("zorque96.ttf", BitmapFont.class);
         createGUI();
@@ -48,22 +51,14 @@ public class MenuScreen implements Screen {
         textButtonStyle.font = font32;
         skin.add("tbs", textButtonStyle);
 
-        TextButton btnNewGame = new TextButton("START", skin, "tbs");
-        TextButton btnExitGame = new TextButton("EXIT", skin, "tbs");
-        btnNewGame.setPosition(520, 120);
-        btnExitGame.setPosition(520, 20);
-        stage.addActor(btnNewGame);
-        stage.addActor(btnExitGame);
-        btnNewGame.addListener(new ChangeListener() {
+        TextButton btnOk = new TextButton("OK((((0(", skin, "tbs");
+        btnOk.setPosition(520, 20);
+        stage.addActor(btnOk);
+
+        btnOk.addListener(new ClickListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                ScreenManager.getInstance().switchScreen(ScreenManager.ScreenType.GAME, null);
-            }
-        });
-        btnExitGame.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.exit();
+            public void clicked(InputEvent event, float x, float y) {
+                ScreenManager.getInstance().switchScreen(ScreenManager.ScreenType.MENU, null);
             }
         });
     }
@@ -72,8 +67,9 @@ public class MenuScreen implements Screen {
     public void render(float delta) {
         update(delta);
         batch.begin();
-        batch.draw(textureRegionBackground, 0, 0);
-        font96.draw(batch, "Tanks Game", 0, 320, 1280, 1, false);
+        batch.draw(textureBackground, 0, 0);
+        font96.draw(batch, "Winner: ", 0, 320, 1280, 1, false);
+        font32.draw(batch, winner, 0, 190, 1280, 1, false);
         batch.end();
         stage.draw();
     }
@@ -83,25 +79,25 @@ public class MenuScreen implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
-        ScreenManager.getInstance().onResize(width, height);
-    }
+    public void resize(int width, int height) { ScreenManager.getInstance().onResize(width, height); }
 
     @Override
     public void pause() {
+
     }
 
     @Override
     public void resume() {
+
     }
 
     @Override
     public void hide() {
+
     }
 
     @Override
     public void dispose() {
-        skin.dispose();
-        stage.dispose();
+
     }
 }

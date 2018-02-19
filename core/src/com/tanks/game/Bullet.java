@@ -12,7 +12,7 @@ public class Bullet implements Renderable {
     private Vector2 velocity;
 
     private boolean active = true;
-    private float angle = 0f;
+    private float angle = 0.0f;
 
     public Bullet(float x, float y, float vx, float vy) {
         bullet = Assets.getInstance().getAtlas().findRegion("ammo");
