@@ -20,7 +20,7 @@ public class Tank {
     protected Sprite turr;
     protected Sprite body;
     protected Sprite track;
-    protected boolean isDead;
+    protected boolean isHurt;
 
     public Tank(GameScreen game, Vector2 position) {
         this.game = game;
@@ -104,11 +104,12 @@ public class Tank {
 
     public void makeDamage(int dmg) {
         hp -= dmg;
+        isHurt = true;
         if (hp <= 0) {
             hp = 0;
-            isDead = true;
         }
     }
+
 
     public Vector2 getPosition() {
         return position;
