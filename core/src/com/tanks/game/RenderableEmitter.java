@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class RenderableEmitter<T extends Renderable> implements Iterable<T> {
-    private ArrayList<T> arrayList = new ArrayList<>();
+    private ArrayList<T> arrayList = new ArrayList<T>();
 
     public void render(SpriteBatch batch) {
-        ArrayList<T> newArrayList = new ArrayList<>();
+        ArrayList<T> newArrayList = new ArrayList<T>();
         for (T e : arrayList) {
             if (e.render(batch)) {
                 newArrayList.add(e);

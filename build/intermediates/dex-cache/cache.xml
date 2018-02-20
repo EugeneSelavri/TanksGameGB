@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/jessykiss/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.8/a35a0076fbce873f9c2d5a1a1c8066244231bb3c/gdx-1.9.8.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="a35a0076fbce873f9c2d5a1a1c8066244231bb3c">
+        <dex dex="/Users/jessykiss/Desktop/AndroidTanksGameGB/android/build/intermediates/pre-dexed/debug/gdx-1.9.8_c52d67b9afbd1b245d6641f6f0c30a5e3dd06f91.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/jessykiss/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-android/1.9.8/84024cd60ad6f26370891fbcd17de9f0167e662/gdx-backend-android-1.9.8.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="084024cd60ad6f26370891fbcd17de9f0167e662">
+        <dex dex="/Users/jessykiss/Desktop/AndroidTanksGameGB/android/build/intermediates/pre-dexed/debug/gdx-backend-android-1.9.8_885f80160133c6ced3eb79a9d7fbd33963a78bfe.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/jessykiss/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.8/d92b5b8beab10e3b3c0dd836d4fc186f95e7ea4b/gdx-freetype-1.9.8.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="d92b5b8beab10e3b3c0dd836d4fc186f95e7ea4b">
+        <dex dex="/Users/jessykiss/Desktop/AndroidTanksGameGB/android/build/intermediates/pre-dexed/debug/gdx-freetype-1.9.8_4cde8ec3d98e5f5be1eea23a0a4cc8a87b5d2888.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/jessykiss/Desktop/AndroidTanksGameGB/core/build/libs/core-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="59b840405cdac6166d10123be9870be77362e804">
+        <dex dex="/Users/jessykiss/Desktop/AndroidTanksGameGB/android/build/intermediates/pre-dexed/debug/core-1.0_820652e76d1ecea9bfc2a33ebe1c67f539b6b7c8.jar" />
+    </item>
+
+</items>

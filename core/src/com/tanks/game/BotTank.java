@@ -7,7 +7,7 @@ public final class BotTank extends Tank {
     private Tank playerTank;
     private int flagTurr = 1;
     private int flagMove = -1;
-    RenderableEmitter<Bullet> botBulletEmitter = new RenderableEmitter<>();
+    RenderableEmitter<Bullet> botBulletEmitter = new RenderableEmitter<Bullet>();
 
     public RenderableEmitter<Bullet> getBotBulletEmitter() {
         return botBulletEmitter;

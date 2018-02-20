@@ -25,8 +25,8 @@ public class GameScreen implements Screen {
     private MyTank player;
     private BotTank bot;
     private float dt;
-    private RenderableEmitter<Bullet> bulletEmitter = new RenderableEmitter<>();
-    private RenderableEmitter<Explosion> expEmitter = new RenderableEmitter<>();
+    private RenderableEmitter<Bullet> bulletEmitter = new RenderableEmitter<Bullet>();
+    private RenderableEmitter<Explosion> expEmitter = new RenderableEmitter<Explosion>();
 
     private Stage stage;
 
